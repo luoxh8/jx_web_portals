@@ -7,4 +7,4 @@ services:
     volumes:
       - .:/jx_web_portals
     ports:
-      - "8000:8000"
+      - "80:8000"
