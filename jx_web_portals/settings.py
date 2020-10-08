@@ -58,7 +58,7 @@ DATABASES = {
         'NAME'    : 'jx_web_portals',  # 数据库名，先前创建的
         'USER'    : 'root',  # 用户名，可以自己创建用户
         'PASSWORD': 'TMGz8iILyZoBWpcSRsEl41m7tKwRhPFy',  # 密码
-        'HOST'    : '192.168.1.121',  # mysql服务所在的主机ip
+        'HOST'    : '139.196.208.153',  # mysql服务所在的主机ip
         'PORT'    : '3306',  # mysql服务端口
     }
 }
