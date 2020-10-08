@@ -11,7 +11,7 @@
 
     function openByHash() {
         var hash = location.hash;
-        hash = hash.substring(1)
+        hash     = hash.substring(1)
 
         for (var i = 0; i < app.menuData.length; i++) {
             var item = app.menuData[i]
@@ -35,7 +35,7 @@
 
     var fontConfig = new Vue({
         // el: '#dynamicCss',
-        data: {
+        data   : {
             fontSize: null
         },
         created: function () {
@@ -46,13 +46,13 @@
                 this.fontSize = 0;
             }
         },
-        watch: {
+        watch  : {
             fontSize: function (newValue) {
                 if (newValue != 0) {
                     var fontStyle = document.getElementById('fontStyle');
                     if (!fontStyle) {
-                        fontStyle = document.createElement('style');
-                        fontStyle.id = 'fontStyle';
+                        fontStyle      = document.createElement('style');
+                        fontStyle.id   = 'fontStyle';
                         fontStyle.type = 'text/css';
                         document.head.append(fontStyle);
                     }
@@ -94,106 +94,112 @@
     }
 
     new Vue({
-        el: '#main',
-        data: {
-            drawer: false,
-            mobile: false,
-            upgrade: {
-                isUpdate: false,
-                body: '',
-                version: '',
+        el     : '#main',
+        data   : {
+            drawer            : false,
+            mobile            : false,
+            upgrade           : {
+                isUpdate     : false,
+                body         : '',
+                version      : '',
                 dialogVisible: false
             },
-            isResize: false,
-            searchInput: '',
-            height: 1000,
-            fold: false,
-            zoom: false,
-            timeline: true,
-            tabs: [home],
-            tabModel: 0,
-            tabIndex: 0,
-            menus: [],
-            menuActive: '0',
-            breadcrumbs: [],
-            language: window.language,
-            pwdDialog: {},
+            isResize          : false,
+            searchInput       : '',
+            height            : 1000,
+            fold              : false,
+            zoom              : false,
+            timeline          : true,
+            tabs              : [home],
+            tabModel          : 0,
+            tabIndex          : 0,
+            menus             : [],
+            menuActive        : '0',
+            breadcrumbs       : [],
+            language          : window.language,
+            pwdDialog         : {},
             themeDialogVisible: false,
-            small: false,
-            themes: SimpleuiThemes,
-            theme: "",
-            themeName: "",
-            popup: {
-                left: 0,
-                top: 0,
-                show: false,
-                tab: null,
-                menus: [{
-                    text: getLanuage('Refresh'),
-                    icon: 'el-icon-refresh',
-                    handler: function (tab, item) {
-                        try {
-                            document.getElementById(tab.id).contentWindow.location.reload(true);
-                        } catch (e) {
-                            console.log(e)
-                            var url = tab.url.split('?')[0];
-                            tab.url = url + '?_=' + new Date().getTime()
+            small             : false,
+            themes            : SimpleuiThemes,
+            theme             : "",
+            themeName         : "",
+            popup             : {
+                left : 0,
+                top  : 0,
+                show : false,
+                tab  : null,
+                menus: [
+                    {
+                        text   : getLanuage('Refresh'),
+                        icon   : 'el-icon-refresh',
+                        handler: function (tab, item) {
+                            try {
+                                document.getElementById(tab.id).contentWindow.location.reload(true);
+                            } catch (e) {
+                                console.log(e)
+                                var url = tab.url.split('?')[0];
+                                tab.url = url + '?_=' + new Date().getTime()
+                            }
+                        }
+                    },
+                    {
+                        text   : getLanuage('Close current'),
+                        icon   : 'el-icon-circle-close',
+                        handler: function (tab, item) {
+                            app.handleTabsEdit(tab.id, 'remove');
+                        }
+                    },
+                    {
+                        text   : getLanuage('Close other'),
+                        icon   : 'far fa-copy',
+                        handler: function (tab) {
+                            app.tabs.forEach(item => {
+                                if (item.id != tab.id) {
+                                    app.handleTabsEdit(item.id, 'remove');
+                                }
+                            })
+                        }
+                    },
+                    {
+                        text   : getLanuage('Close all'),
+                        icon   : 'el-icon-close',
+                        handler: function (tab, item) {
+
+                            app.$confirm(Lanuages["Are you sure you want them all closed"], Lanuages.Tips, {
+                                confirmButtonText: Lanuages.ConfirmYes,
+                                cancelButtonText : Lanuages.ConfirmNo,
+                                type             : 'warning'
+                            }).then(function () {
+                                app.tabs.forEach((tab, index) => {
+                                    if (index != 0) {
+                                        app.handleTabsEdit(tab.id, 'remove');
+                                    }
+                                });
+                                app.menuActive = '1';
+                            }).catch(function () {
+
+                            });
+
+                        }
+                    },
+                    {
+                        text   : getLanuage('Open in a new page'),
+                        icon   : 'el-icon-news',
+                        handler: function (tab, item) {
+                            window.open(tab.newUrl);
                         }
                     }
-                }, {
-                    text: getLanuage('Close current'),
-                    icon: 'el-icon-circle-close',
-                    handler: function (tab, item) {
-                        app.handleTabsEdit(tab.id, 'remove');
-                    }
-                }, {
-                    text: getLanuage('Close other'),
-                    icon: 'far fa-copy',
-                    handler: function (tab) {
-                        app.tabs.forEach(item => {
-                            if (item.id != tab.id) {
-                                app.handleTabsEdit(item.id, 'remove');
-                            }
-                        })
-                    }
-                }, {
-                    text: getLanuage('Close all'),
-                    icon: 'el-icon-close',
-                    handler: function (tab, item) {
-
-                        app.$confirm(Lanuages["Are you sure you want them all closed"], Lanuages.Tips, {
-                            confirmButtonText: Lanuages.ConfirmYes,
-                            cancelButtonText: Lanuages.ConfirmNo,
-                            type: 'warning'
-                        }).then(function () {
-                            app.tabs.forEach((tab, index) => {
-                                if (index != 0) {
-                                    app.handleTabsEdit(tab.id, 'remove');
-                                }
-                            });
-                            app.menuActive = '1';
-                        }).catch(function () {
-
-                        });
-
-                    }
-                }, {
-                    text: getLanuage('Open in a new page'),
-                    icon: 'el-icon-news',
-                    handler: function (tab, item) {
-                        window.open(tab.newUrl);
-                    }
-                }]
+                ]
             },
             //菜单里面的模块
-            models: [],
-            fontDialogVisible: false,
-            fontSlider: 12,
-            loading: false,
-            menuTextShow: true,
-            menuData: []
+            models            : [],
+            fontDialogVisible : false,
+            fontSlider        : 12,
+            loading           : false,
+            menuTextShow      : true,
+            menuData          : []
         },
-        watch: {
+        watch  : {
             theme: function (newValue, oldValue) {
                 this.$nextTick(function () {
                     if (window.renderCallback) {
@@ -201,7 +207,7 @@
                     }
                 });
             },
-            fold: function (newValue, oldValue) {
+            fold : function (newValue, oldValue) {
                 // console.log(newValue)
             },
             menus: function (newValue, oldValue) {
@@ -222,25 +228,25 @@
                 });
             }
             /*,
-            tabs: function (newValue, oldValue) {
+             tabs: function (newValue, oldValue) {
 
-                //改变tab时把状态储存到sessionStorage
-                console.log(newValue)
-            }*/
+             //改变tab时把状态储存到sessionStorage
+             console.log(newValue)
+             }*/
         },
         created: function () {
 
             // this.watch.theme('');
 
-            var val = getCookie('fold') == 'true';
-            this.small = this.fold = val;
+            var val           = getCookie('fold') == 'true';
+            this.small        = this.fold = val;
             this.menuTextShow = !this.fold;
 
-            var self = this;
+            var self        = this;
             window.onresize = function () {
 
                 self.height = document.documentElement.clientHeight || document.body.clientHeight
-                var width = document.documentElement.clientWidth || document.body.clientWidth;
+                var width   = document.documentElement.clientWidth || document.body.clientWidth;
 
                 if (!self.small) {
 
@@ -250,7 +256,7 @@
                     })
                 }
                 self.isResize = true;
-                self.mobile = width < 800;
+                self.mobile   = width < 800;
 
                 //判断全屏状态
                 try {
@@ -259,7 +265,7 @@
                     //不是非webkit内核下，无能为力
                 }
             }
-            window.app = this;
+            window.app      = this;
 
 
             window.menus.forEach(item => {
@@ -277,28 +283,28 @@
 
             this.menus = window.menus
 
-            this.theme = getCookie('theme');
+            this.theme     = getCookie('theme');
             this.themeName = getCookie('theme_name');
 
 
             //接收子页面的事件注册
             window.themeEvents = [];
-            window.fontEvents = [];
-            window.addEvent = function (name, handler) {
+            window.fontEvents  = [];
+            window.addEvent    = function (name, handler) {
                 if (name == 'theme') {
                     themeEvents.push(handler);
                 } else if (name == 'font') {
                     fontEvents.push(handler);
-                }else if(name=='title'){
+                } else if (name == 'title') {
                     console.log(handler)
-                    app.tabs.forEach(item=>{
-                        if(item.eid==app.tabModel){
+                    app.tabs.forEach(item => {
+                        if (item.eid == app.tabModel) {
                             item.name = handler;
                         }
                     })
                 }
             }
-            var temp_tabs = sessionStorage['tabs'];
+            var temp_tabs      = sessionStorage['tabs'];
 
             if (temp_tabs && temp_tabs != '') {
                 this.tabs = JSON.parse(temp_tabs);
@@ -318,13 +324,13 @@
             });
         },
         methods: {
-            syncTabs: function () {
+            syncTabs       : function () {
                 if (window.sessionStorage) {
                     sessionStorage['tabs'] = JSON.stringify(this.tabs);
                 }
             },
-            reset: function () {
-                this.fontSlider = 14;
+            reset          : function () {
+                this.fontSlider     = 14;
                 fontConfig.fontSize = 0;
 
                 setCookie('fontSize', 0);
@@ -334,8 +340,8 @@
                     handler(0);
                 });
             },
-            fontClick: function () {
-                this.fontSlider = fontConfig.fontSize;
+            fontClick      : function () {
+                this.fontSlider        = fontConfig.fontSize;
                 this.fontDialogVisible = !this.fontDialogVisible;
             },
             fontSlideChange: function (value) {
@@ -347,20 +353,20 @@
                 });
 
             },
-            iframeLoad: function (tab, e) {
+            iframeLoad     : function (tab, e) {
                 url = e.target.contentWindow.location.href
 
-                tab.newUrl = url;
+                tab.newUrl  = url;
                 tab.loading = false;
                 this.$forceUpdate();
-                var self = this;
+                var self                          = this;
                 e.target.contentWindow.beforeLoad = function () {
                     tab.loading = true;
                     self.$forceUpdate();
                 }
-                this.loading = false;
+                this.loading                      = false;
             },
-            setTheme: function (item) {
+            setTheme       : function (item) {
                 var url = window.themeUrl;
                 if (item.file && item.file != '') {
                     this.theme = url + item.file;
@@ -377,46 +383,46 @@
                     handler(self.theme)
                 });
             },
-            openUrl: function (url) {
+            openUrl        : function (url) {
                 window.open(url);
             },
-            contextmenu: function (item, e) {
+            contextmenu    : function (item, e) {
                 //右键菜单，如果x+菜单宽度超过屏幕宽度，就默认为屏幕宽度-10-菜单宽度
 
                 //home没有popup menu
                 if (item.id == '0') {
                     return;
                 }
-                this.popup.tab = item;
+                this.popup.tab  = item;
                 this.popup.show = true;
                 this.$nextTick(function () {
-                    let el = this.$refs.popupmenu;
-                    el.style.width='150px';
-                    let x = e.clientX;
+                    let el         = this.$refs.popupmenu;
+                    el.style.width = '150px';
+                    let x          = e.clientX;
 
-                    let w= document.body.offsetWidth
-                    if(x+150>w){
+                    let w = document.body.offsetWidth
+                    if (x + 150 > w) {
                         x = w - 160;
                     }
 
                     this.popup.left = x;
-                    this.popup.top = e.clientY;
+                    this.popup.top  = e.clientY;
                 });
             },
-            mainClick: function (e) {
+            mainClick      : function (e) {
                 this.popup.show = false;
             },
-            tabClick: function (tab) {
-                var item = this.tabs[tab.index];
-                var index = item.index;
-                this.menuActive = String(index);
+            tabClick       : function (tab) {
+                var item         = this.tabs[tab.index];
+                var index        = item.index;
+                this.menuActive  = String(index);
                 this.breadcrumbs = item.breadcrumbs;
                 if (tab.index == '0') {
                     item.url = '/'
                 }
                 changeUrl(item);
             },
-            handleTabsEdit: function (targetName, action) {
+            handleTabsEdit : function (targetName, action) {
 
                 var self = this;
                 if (action === 'remove') {
@@ -425,8 +431,8 @@
                         if (tab.id == targetName) {
                             var temp = self.tabs[index + 1] || self.tabs[index - 1];
                             if (temp) {
-                                next = temp.id;
-                                self.menuActive = temp.index;
+                                next             = temp.id;
+                                self.menuActive  = temp.index;
                                 self.breadcrumbs = temp.breadcrumbs;
                                 changeUrl(temp)
                             }
@@ -441,7 +447,7 @@
                 }
             }
             ,
-            openTab: function (data, index, selected, loading) {
+            openTab        : function (data, index, selected, loading) {
                 if (data.breadcrumbs) {
                     this.breadcrumbs = data.breadcrumbs;
                 }
@@ -466,7 +472,7 @@
                 }
 
                 this.breadcrumbs = data.breadcrumbs;
-                var exists = null;
+                var exists       = null;
                 //判断是否存在，存在就直接打开
                 for (var i = 0; i < this.tabs.length; i++) {
                     var tab = this.tabs[i];
@@ -490,7 +496,7 @@
                         }
                     }
                     // data.id = new Date().getTime() + "" + Math.random();
-                    data.id = data.eid;
+                    data.id    = data.eid;
                     data.index = index;
                     this.tabs.push(data);
                     this.tabModel = data.id;
@@ -499,7 +505,7 @@
                 this.syncTabs();
             }
             ,
-            foldClick: function () {
+            foldClick      : function () {
 
                 //移动端浮动菜单
                 var width = document.documentElement.clientWidth || document.body.clientWidth;
@@ -519,33 +525,35 @@
 
             }
             ,
-            changePassword: function () {
+            changePassword : function () {
                 var width = document.documentElement.clientWidth || document.body.clientWidth;
                 if (width > 800) {
                     this.pwdDialog = {
-                        url: window.urls.changePassword + '?dialog=1',
+                        url : window.urls.changePassword + '?dialog=1',
                         name: language.change_password,
                         show: true
                     };
                 } else {
                     this.openTab({
-                        url: window.urls.changePassword,
-                        icon: 'far fa-edit',
-                        name: language.change_password,
-                        breadcrumbs: [{
-                            name: language.change_password,
-                            icon: 'far fa-edit'
-                        }]
+                        url        : window.urls.changePassword,
+                        icon       : 'far fa-edit',
+                        name       : language.change_password,
+                        breadcrumbs: [
+                            {
+                                name: language.change_password,
+                                icon: 'far fa-edit'
+                            }
+                        ]
                     })
                     app.breadcrumbs = [language.change_password];
                 }
             }
             ,
-            logout: function () {
+            logout         : function () {
                 this.$confirm(language.confirm, Lanuages.Tips, {
                     confirmButtonText: language.yes,
-                    cancelButtonText: language.no,
-                    type: 'warning'
+                    cancelButtonText : language.no,
+                    type             : 'warning'
                 }).then(function () {
                     //清除cookie主题设置和sessionStore数据
                     delete sessionStorage['tabs'];
@@ -557,16 +565,16 @@
                 });
             }
             ,
-            goIndex: function (url) {
+            goIndex        : function (url) {
                 if (!url || url == 'None') {
                     url = '/';
                 }
                 window.open(url);
             }
             ,
-            getLanuage: getLanuage,
-            getIcon: getIcon,
-            goZoom: function () {
+            getLanuage     : getLanuage,
+            getIcon        : getIcon,
+            goZoom         : function () {
                 var el = window.document.body;
                 if (!this.zoom) {
 
@@ -589,7 +597,7 @@
             displayTimeline: function () {
                 this.timeline = !this.timeline;
             },
-            report: function (url) {
+            report         : function (url) {
                 if (!url) {
                     if (document.querySelector('html').lang) {
                         url = 'https://simpleui.88cto.com';

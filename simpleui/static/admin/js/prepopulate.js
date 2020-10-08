@@ -3,13 +3,13 @@
     'use strict';
     $.fn.prepopulate = function (dependencies, maxLength, allowUnicode) {
         /*
-            Depends on urlify.js
-            Populates a selected field with the values of the dependent fields,
-            URLifies and shortens the string.
-            dependencies - array of dependent fields ids
-            maxLength - maximum length of the URLify'd string
-            allowUnicode - Unicode support of the URLify'd string
-        */
+         Depends on urlify.js
+         Populates a selected field with the values of the dependent fields,
+         URLifies and shortens the string.
+         dependencies - array of dependent fields ids
+         maxLength - maximum length of the URLify'd string
+         allowUnicode - Unicode support of the URLify'd string
+         */
         return this.each(function () {
             var prepopulatedField = $(this);
 

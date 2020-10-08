@@ -2,7 +2,7 @@
 
 // basic browser identification & version
 var isOpera = (navigator.userAgent.indexOf("Opera") >= 0) && parseFloat(navigator.appVersion);
-var isIE = ((document.all) && (!isOpera)) && parseFloat(navigator.appVersion.split("MSIE ")[1].split(";")[0]);
+var isIE    = ((document.all) && (!isOpera)) && parseFloat(navigator.appVersion.split("MSIE ")[1].split(";")[0]);
 
 // quickElement(tagType, parentReference [, textInChildNode, attribute, attributeValue ...]);
 function quickElement() {
@@ -122,23 +122,24 @@ function findPosY(obj) {
 
     Date.prototype.strftime = function (format) {
         var fields = {
-            B: this.getFullMonthName(),
-            c: this.toString(),
-            d: this.getTwoDigitDate(),
-            H: this.getTwoDigitHour(),
-            I: this.getTwoDigitTwelveHour(),
-            m: this.getTwoDigitMonth(),
-            M: this.getTwoDigitMinute(),
-            p: (this.getHours() >= 12) ? 'PM' : 'AM',
-            S: this.getTwoDigitSecond(),
-            w: '0' + this.getDay(),
-            x: this.toLocaleDateString(),
-            X: this.toLocaleTimeString(),
-            y: ('' + this.getFullYear()).substr(2, 4),
-            Y: '' + this.getFullYear(),
+            B  : this.getFullMonthName(),
+            c  : this.toString(),
+            d  : this.getTwoDigitDate(),
+            H  : this.getTwoDigitHour(),
+            I  : this.getTwoDigitTwelveHour(),
+            m  : this.getTwoDigitMonth(),
+            M  : this.getTwoDigitMinute(),
+            p  : (this.getHours() >= 12) ? 'PM' : 'AM',
+            S  : this.getTwoDigitSecond(),
+            w  : '0' + this.getDay(),
+            x  : this.toLocaleDateString(),
+            X  : this.toLocaleTimeString(),
+            y  : ('' + this.getFullYear()).substr(2, 4),
+            Y  : '' + this.getFullYear(),
             '%': '%'
         };
-        var result = '', i = 0;
+        var result = '',
+            i = 0;
         while (i < format.length) {
             if (format.charAt(i) === '%') {
                 result = result + fields[format.charAt(i + 1)];
@@ -164,9 +165,11 @@ function findPosY(obj) {
 
     String.prototype.strptime = function (format) {
         var split_format = format.split(/[.\-/]/);
-        var date = this.split(/[.\-/]/);
-        var i = 0;
-        var day, month, year;
+        var date         = this.split(/[.\-/]/);
+        var i            = 0;
+        var day,
+            month,
+            year;
         while (i < split_format.length) {
             switch (split_format[i]) {
                 case "%d":
@@ -203,7 +206,7 @@ function getStyle(oElm, strCssRule) {
         strCssRule = strCssRule.replace(/\-(\w)/g, function (strMatch, p1) {
             return p1.toUpperCase();
         });
-        strValue = oElm.currentStyle[strCssRule];
+        strValue   = oElm.currentStyle[strCssRule];
     }
     return strValue;
 }

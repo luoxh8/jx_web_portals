@@ -15,10 +15,12 @@
         $("fieldset.collapse a.collapse-toggle").click(function (ev) {
             if ($(this).closest("fieldset").hasClass("collapsed")) {
                 // Show
-                $(this).text(gettext("Hide")).closest("fieldset").removeClass("collapsed").trigger("show.fieldset", [$(this).attr("id")]);
+                $(this).text(gettext("Hide")).closest("fieldset").removeClass("collapsed")
+                       .trigger("show.fieldset", [$(this).attr("id")]);
             } else {
                 // Hide
-                $(this).text(gettext("Show")).closest("fieldset").addClass("collapsed").trigger("hide.fieldset", [$(this).attr("id")]);
+                $(this).text(gettext("Show")).closest("fieldset").addClass("collapsed")
+                       .trigger("hide.fieldset", [$(this).attr("id")]);
             }
             return false;
         });

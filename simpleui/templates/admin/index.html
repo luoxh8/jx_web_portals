@@ -311,34 +311,34 @@
     <script type="text/javascript">
         {% if home %}
             var home = {
-                id: '0',
-                index: '1',
-                name: '{{ title }}',
-                icon: '{{ icon }}',
+                id    : '0',
+                index : '1',
+                name  : '{{ title }}',
+                icon  : '{{ icon }}',
                 active: true,
-                eid: '1'
+                eid   : '1'
             }
         {% else %}
             var home = {
-                id: '0',
+                id   : '0',
                 index: '1',
-                eid: '1',
-                name: "{% trans 'Home' %}",
-                icon: 'fas fa-home'
+                eid  : '1',
+                name : "{% trans 'Home' %}",
+                icon : 'fas fa-home'
             };
         {% endif %}
         menus.unshift(home);
         window.language = {
             change_password: '{% trans 'Change password' %}',
-            logout: '{% trans 'Log out' %}',
-            yes: '{% trans 'Yes' %}',
-            no: '{% trans 'No' %}',
-            confirm: '{% trans 'Are you sure?' %}'
+            logout         : '{% trans 'Log out' %}',
+            yes            : '{% trans 'Yes' %}',
+            no             : '{% trans 'No' %}',
+            confirm        : '{% trans 'Are you sure?' %}'
         }
         window.themeUrl = '{% static '/admin/simpleui-x/theme/' %}';
-        window.urls = {
+        window.urls     = {
             changePassword: "{% url 'admin:password_change' %}",
-            logout: "{% url 'admin:logout' %}"
+            logout        : "{% url 'admin:logout' %}"
         }
         var lanuageCode = '{% get_language %}';
 

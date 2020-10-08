@@ -108,11 +108,11 @@
         $(".object-tools").hide().find('li a').each(function () {
             _action.exts.push({
                 name: $(this).text(),
-                url: $(this).attr('href')
+                url : $(this).attr('href')
             })
         })
-        if(parent.addEvent){
-            parent.addEvent('title','{% get_verbose_name_plural %}')
+        if (parent.addEvent) {
+            parent.addEvent('title', '{% get_verbose_name_plural %}')
         }
     </script>
 {% endblock %}

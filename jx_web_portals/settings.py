@@ -92,3 +92,4 @@ STATIC_URL = '/static/'
 
 # custom
 CKEDITOR_UPLOAD_PATH = "uploads/"
+SIMPLEUI_HOME_INFO = False

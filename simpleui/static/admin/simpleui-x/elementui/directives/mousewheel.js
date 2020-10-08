@@ -11,16 +11,19 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var isFirefox = typeof navigator !== 'undefined' && navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
 
 var mousewheel = function mousewheel(element, callback) {
-  if (element && element.addEventListener) {
-    element.addEventListener(isFirefox ? 'DOMMouseScroll' : 'mousewheel', function (event) {
-      var normalized = (0, _normalizeWheel2.default)(event);
-      callback && callback.apply(this, [event, normalized]);
-    });
-  }
+    if (element && element.addEventListener) {
+        element.addEventListener(isFirefox ? 'DOMMouseScroll' : 'mousewheel', function (event) {
+            var normalized = (0, _normalizeWheel2.default)(event);
+            callback && callback.apply(this, [
+                event,
+                normalized
+            ]);
+        });
+    }
 };
 
 exports.default = {
-  bind: function bind(el, binding) {
-    mousewheel(el, binding.value);
-  }
+    bind: function bind(el, binding) {
+        mousewheel(el, binding.value);
+    }
 };

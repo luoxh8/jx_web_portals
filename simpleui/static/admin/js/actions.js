@@ -4,42 +4,42 @@
     var lastChecked;
 
     $.fn.actions = function (opts) {
-        var options = $.extend({}, $.fn.actions.defaults, opts);
-        var actionCheckboxes = $(this);
+        var options               = $.extend({}, $.fn.actions.defaults, opts);
+        var actionCheckboxes      = $(this);
         var list_editable_changed = false;
-        var showQuestion = function () {
+        var showQuestion          = function () {
                 $(options.acrossClears).hide();
                 $(options.acrossQuestions).show();
                 $(options.allContainer).hide();
             },
-            showClear = function () {
+            showClear             = function () {
                 $(options.acrossClears).show();
                 $(options.acrossQuestions).hide();
                 $(options.actionContainer).toggleClass(options.selectedClass);
                 $(options.allContainer).show();
                 $(options.counterContainer).hide();
             },
-            reset = function () {
+            reset                 = function () {
                 $(options.acrossClears).hide();
                 $(options.acrossQuestions).hide();
                 $(options.allContainer).hide();
                 $(options.counterContainer).show();
             },
-            clearAcross = function () {
+            clearAcross           = function () {
                 reset();
                 $(options.acrossInput).val(0);
                 $(options.actionContainer).removeClass(options.selectedClass);
             },
-            checker = function (checked) {
+            checker               = function (checked) {
                 if (checked) {
                     showQuestion();
                 } else {
                     reset();
                 }
                 $(actionCheckboxes).prop("checked", checked)
-                    .parent().parent().toggleClass(options.selectedClass, checked);
+                                   .parent().parent().toggleClass(options.selectedClass, checked);
             },
-            updateCounter = function () {
+            updateCounter         = function () {
                 var sel = $(actionCheckboxes).filter(":checked").length;
                 // data-actions-icnt is defined in the generated HTML
                 // and contains the total amount of objects in the queryset
@@ -96,14 +96,14 @@
             if (lastChecked && $.data(lastChecked) !== $.data(target) && event.shiftKey === true) {
                 var inrange = false;
                 $(lastChecked).prop("checked", target.checked)
-                    .parent().parent().toggleClass(options.selectedClass, target.checked);
+                              .parent().parent().toggleClass(options.selectedClass, target.checked);
                 $(actionCheckboxes).each(function () {
                     if ($.data(this) === $.data(lastChecked) || $.data(this) === $.data(target)) {
                         inrange = (inrange) ? false : true;
                     }
                     if (inrange) {
                         $(this).prop("checked", target.checked)
-                            .parent().parent().toggleClass(options.selectedClass, target.checked);
+                               .parent().parent().toggleClass(options.selectedClass, target.checked);
                     }
                 });
             }
@@ -137,14 +137,14 @@
     };
     /* Setup plugin defaults */
     $.fn.actions.defaults = {
-        actionContainer: "div.actions",
+        actionContainer : "div.actions",
         counterContainer: "span.action-counter",
-        allContainer: "div.actions span.all",
-        acrossInput: "div.actions input.select-across",
-        acrossQuestions: "div.actions span.question",
-        acrossClears: "div.actions span.clear",
-        allToggle: "#action-toggle",
-        selectedClass: "selected"
+        allContainer    : "div.actions span.all",
+        acrossInput     : "div.actions input.select-across",
+        acrossQuestions : "div.actions span.question",
+        acrossClears    : "div.actions span.clear",
+        allToggle       : "#action-toggle",
+        selectedClass   : "selected"
     };
     $(document).ready(function () {
         var $actionsEls = $('tr input.action-select');

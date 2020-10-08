@@ -1,14 +1,14 @@
 /*global gettext, pgettext, get_format, quickElement, removeChildren*/
 /*
-calendar.js - Calendar functions by Adrian Holovaty
-depends on core.js for utility functions like removeChildren or quickElement
-*/
+ calendar.js - Calendar functions by Adrian Holovaty
+ depends on core.js for utility functions like removeChildren or quickElement
+ */
 
 (function () {
     'use strict';
     // CalendarNamespace -- Provides a collection of HTML calendar-related helper functions
     var CalendarNamespace = {
-        monthsOfYear: [
+        monthsOfYear  : [
             gettext('January'),
             gettext('February'),
             gettext('March'),
@@ -22,7 +22,7 @@ depends on core.js for utility functions like removeChildren or quickElement
             gettext('November'),
             gettext('December')
         ],
-        daysOfWeek: [
+        daysOfWeek    : [
             pgettext('one letter Sunday', 'S'),
             pgettext('one letter Monday', 'M'),
             pgettext('one letter Tuesday', 'T'),
@@ -32,7 +32,7 @@ depends on core.js for utility functions like removeChildren or quickElement
             pgettext('one letter Saturday', 'S')
         ],
         firstDayOfWeek: parseInt(get_format('FIRST_DAY_OF_WEEK')),
-        isLeapYear: function (year) {
+        isLeapYear    : function (year) {
             return (((year % 4) === 0) && ((year % 100) !== 0) || ((year % 400) === 0));
         },
         getDaysInMonth: function (month, year) {
@@ -48,11 +48,11 @@ depends on core.js for utility functions like removeChildren or quickElement
             }
             return days;
         },
-        draw: function (month, year, div_id, callback, selected) { // month = 1-12, year = 1-9999
-            var today = new Date();
-            var todayDay = today.getDate();
+        draw          : function (month, year, div_id, callback, selected) { // month = 1-12, year = 1-9999
+            var today      = new Date();
+            var todayDay   = today.getDate();
             var todayMonth = today.getMonth() + 1;
-            var todayYear = today.getFullYear();
+            var todayYear  = today.getFullYear();
             var todayClass = '';
 
             // Use UTC functions here because the date field does not contain time
@@ -71,8 +71,8 @@ depends on core.js for utility functions like removeChildren or quickElement
                 isSelectedMonth = (selected.getUTCFullYear() === year && (selected.getUTCMonth() + 1) === month);
             }
 
-            month = parseInt(month);
-            year = parseInt(year);
+            month      = parseInt(month);
+            year       = parseInt(year);
             var calDiv = document.getElementById(div_id);
             removeChildren(calDiv);
             var calTable = document.createElement('table');
@@ -86,14 +86,14 @@ depends on core.js for utility functions like removeChildren or quickElement
             }
 
             var startingPos = new Date(year, month - 1, 1 - CalendarNamespace.firstDayOfWeek).getDay();
-            var days = CalendarNamespace.getDaysInMonth(month, year);
+            var days        = CalendarNamespace.getDaysInMonth(month, year);
 
             var nonDayCell;
 
             // Draw blanks before first of month
             tableRow = quickElement('tr', tableBody);
             for (i = 0; i < startingPos; i++) {
-                nonDayCell = quickElement('td', tableRow, ' ');
+                nonDayCell           = quickElement('td', tableRow, ' ');
                 nonDayCell.className = "nonday";
             }
 
@@ -134,7 +134,7 @@ depends on core.js for utility functions like removeChildren or quickElement
 
             // Draw blanks after end of month (optional, but makes for valid code)
             while (tableRow.childNodes.length < 7) {
-                nonDayCell = quickElement('td', tableRow, ' ');
+                nonDayCell           = quickElement('td', tableRow, ' ');
                 nonDayCell.className = "nonday";
             }
 
@@ -149,23 +149,23 @@ depends on core.js for utility functions like removeChildren or quickElement
         // callback (string) is the name of a JavaScript function that will be
         //     called with the parameters (year, month, day) when a day in the
         //     calendar is clicked
-        this.div_id = div_id;
-        this.callback = callback;
-        this.today = new Date();
+        this.div_id       = div_id;
+        this.callback     = callback;
+        this.today        = new Date();
         this.currentMonth = this.today.getMonth() + 1;
-        this.currentYear = this.today.getFullYear();
+        this.currentYear  = this.today.getFullYear();
         if (typeof selected !== 'undefined') {
             this.selected = selected;
         }
     }
 
-    Calendar.prototype = {
-        drawCurrent: function () {
+    Calendar.prototype       = {
+        drawCurrent      : function () {
             CalendarNamespace.draw(this.currentMonth, this.currentYear, this.div_id, this.callback, this.selected);
         },
-        drawDate: function (month, year, selected) {
+        drawDate         : function (month, year, selected) {
             this.currentMonth = month;
-            this.currentYear = year;
+            this.currentYear  = year;
 
             if (selected) {
                 this.selected = selected;
@@ -182,7 +182,7 @@ depends on core.js for utility functions like removeChildren or quickElement
             }
             this.drawCurrent();
         },
-        drawNextMonth: function () {
+        drawNextMonth    : function () {
             if (this.currentMonth === 12) {
                 this.currentMonth = 1;
                 this.currentYear++;
@@ -191,15 +191,15 @@ depends on core.js for utility functions like removeChildren or quickElement
             }
             this.drawCurrent();
         },
-        drawPreviousYear: function () {
+        drawPreviousYear : function () {
             this.currentYear--;
             this.drawCurrent();
         },
-        drawNextYear: function () {
+        drawNextYear     : function () {
             this.currentYear++;
             this.drawCurrent();
         }
     };
-    window.Calendar = Calendar;
+    window.Calendar          = Calendar;
     window.CalendarNamespace = CalendarNamespace;
 })();

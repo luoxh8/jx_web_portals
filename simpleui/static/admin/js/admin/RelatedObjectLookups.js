@@ -23,7 +23,7 @@
 
     function showAdminPopup(triggeringLink, name_regexp, add_popup) {
         var name = triggeringLink.id.replace(name_regexp, '');
-        name = id_to_windowname(name);
+        name     = id_to_windowname(name);
         var href = triggeringLink.href;
         if (add_popup) {
             if (href.indexOf('?') === -1) {
@@ -57,7 +57,7 @@
     }
 
     function updateRelatedObjectLinks(triggeringLink) {
-        var $this = $(triggeringLink);
+        var $this    = $(triggeringLink);
         var siblings = $this.nextAll('.change-related, .delete-related');
         if (!siblings.length) {
             return;
@@ -91,7 +91,7 @@
             $(elem).trigger('change');
         } else {
             var toId = name + "_to";
-            var o = new Option(newRepr, newId);
+            var o    = new Option(newRepr, newId);
             SelectBox.add_to_cache(toId, o);
             SelectBox.redisplay(toId);
 
@@ -103,38 +103,46 @@
     }
 
     function dismissChangeRelatedObjectPopup(win, objId, newRepr, newId) {
-        var id = windowname_to_id(win.name).replace(/^edit_/, '');
-        var selectsSelector = interpolate('#%s, #%s_from, #%s_to', [id, id, id]);
-        var selects = $(selectsSelector);
+        var id              = windowname_to_id(win.name).replace(/^edit_/, '');
+        var selectsSelector = interpolate('#%s, #%s_from, #%s_to', [
+            id,
+            id,
+            id
+        ]);
+        var selects         = $(selectsSelector);
         selects.find('option').each(function () {
             if (this.value === objId) {
                 this.textContent = newRepr;
-                this.value = newId;
+                this.value       = newId;
             }
         });
-        if(SelectBox.change){
-            SelectBox.change(id, newRepr, newId,objId);
+        if (SelectBox.change) {
+            SelectBox.change(id, newRepr, newId, objId);
         }
         selects.next().find('.select2-selection__rendered').each(function () {
             // The element can have a clear button as a child.
             // Use the lastChild to modify only the displayed value.
             this.lastChild.textContent = newRepr;
-            this.title = newRepr;
+            this.title                 = newRepr;
         });
         win.close();
     }
 
     function dismissDeleteRelatedObjectPopup(win, objId) {
-        var id = windowname_to_id(win.name).replace(/^delete_/, '');
-        var selectsSelector = interpolate('#%s, #%s_from, #%s_to', [id, id, id]);
-        var selects = $(selectsSelector);
+        var id              = windowname_to_id(win.name).replace(/^delete_/, '');
+        var selectsSelector = interpolate('#%s, #%s_from, #%s_to', [
+            id,
+            id,
+            id
+        ]);
+        var selects         = $(selectsSelector);
         selects.find('option').each(function () {
             if (this.value === objId) {
                 $(this).remove();
             }
         }).trigger('change');
-        if(SelectBox.remove){
-            SelectBox.remove(id,objId);
+        if (SelectBox.remove) {
+            SelectBox.remove(id, objId);
         }
         win.close();
     }
@@ -143,16 +151,16 @@
     window.id_to_windowname = id_to_windowname;
     window.windowname_to_id = windowname_to_id;
 
-    window.showRelatedObjectLookupPopup = showRelatedObjectLookupPopup;
-    window.dismissRelatedLookupPopup = dismissRelatedLookupPopup;
-    window.showRelatedObjectPopup = showRelatedObjectPopup;
-    window.updateRelatedObjectLinks = updateRelatedObjectLinks;
-    window.dismissAddRelatedObjectPopup = dismissAddRelatedObjectPopup;
+    window.showRelatedObjectLookupPopup    = showRelatedObjectLookupPopup;
+    window.dismissRelatedLookupPopup       = dismissRelatedLookupPopup;
+    window.showRelatedObjectPopup          = showRelatedObjectPopup;
+    window.updateRelatedObjectLinks        = updateRelatedObjectLinks;
+    window.dismissAddRelatedObjectPopup    = dismissAddRelatedObjectPopup;
     window.dismissChangeRelatedObjectPopup = dismissChangeRelatedObjectPopup;
     window.dismissDeleteRelatedObjectPopup = dismissDeleteRelatedObjectPopup;
 
     // Kept for backward compatibility
-    window.showAddAnotherPopup = showRelatedObjectPopup;
+    window.showAddAnotherPopup    = showRelatedObjectPopup;
     window.dismissAddAnotherPopup = dismissAddRelatedObjectPopup;
 
     $(document).ready(function () {
@@ -163,7 +171,7 @@
         $('body').on('click', '.related-widget-wrapper-link', function (e) {
             e.preventDefault();
             if (this.href) {
-                var event = $.Event('django:show-related', {href: this.href});
+                var event = $.Event('django:show-related', { href: this.href });
                 $(this).trigger(event);
                 if (!event.isDefaultPrevented()) {
                     showRelatedObjectPopup(this);

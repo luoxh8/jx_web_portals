@@ -7,3 +7,4 @@ from news.models import NewsModel
 @admin.register(NewsModel)
 class NewsAdmin(admin.ModelAdmin):
     content = CKEditorWidget()
+

@@ -15,8 +15,9 @@ function Segment() {
     this.getMappers = function () {
         return mappers;
     }
-    this.cut = function (sentence) {
-        var start = 0, end = sentence.length - 1;
+    this.cut        = function (sentence) {
+        var start = 0,
+            end = sentence.length - 1;
         while (start != end) {
             var str = [];
             for (var i = start; i <= end; i++) {
@@ -41,7 +42,7 @@ function Segment() {
 var segment = new Segment();
 
 function getIcon(name, icon) {
-    if(!name){
+    if (!name) {
         return;
     }
     var value = 'far fa-circle';

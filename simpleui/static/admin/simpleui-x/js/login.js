@@ -3,11 +3,11 @@ if (parent.callback) {
     parent.callback();
 }
 var loginApp = new Vue({
-    el: '.login-main',
-    data: {
+    el     : '.login-main',
+    data   : {
         username: '',
         password: '',
-        loading: false
+        loading : false
     },
     methods: {
         login: function () {
@@ -15,7 +15,7 @@ var loginApp = new Vue({
             if (this.username === "" || this.password === "") {
                 this.$message.error("Please enter your username or password!");
                 this.loading = false;
-                return ;
+                return;
             }
             this.$nextTick(function () {
                 document.getElementById('login-form').submit();

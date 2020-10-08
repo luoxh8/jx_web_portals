@@ -8,9 +8,7 @@ import sys
 import time
 
 import django
-import simpleui
 from django import template
-
 from django.core.serializers.json import DjangoJSONEncoder
 from django.db import models
 from django.urls import reverse
@@ -18,6 +16,8 @@ from django.utils.encoding import force_text
 from django.utils.functional import Promise
 from django.utils.html import format_html
 from django.utils.safestring import mark_safe
+
+import simpleui
 
 register = template.Library()
 
@@ -187,10 +187,10 @@ def menus(context, _get_config=None):
     for app in app_list:
         _models = [
             {
-                'name': m.get('name'),
-                'icon': get_icon(m.get('object_name'), unicode_to_str(m.get('name'))),
-                'url': m.get('admin_url'),
-                'addUrl': m.get('add_url'),
+                'name'       : m.get('name'),
+                'icon'       : get_icon(m.get('object_name'), unicode_to_str(m.get('name'))),
+                'url'        : m.get('admin_url'),
+                'addUrl'     : m.get('add_url'),
                 'breadcrumbs': [{
                     'name': app.get('name'),
                     'icon': get_icon(app.get('app_label'), app.get('name'))
@@ -204,8 +204,8 @@ def menus(context, _get_config=None):
         ] if app.get('models') else []
 
         module = {
-            'name': app.get('name'),
-            'icon': get_icon(app.get('app_label'), app.get('name')),
+            'name'  : app.get('name'),
+            'icon'  : get_icon(app.get('app_label'), app.get('name')),
             'models': _models
         }
         data.append(module)
@@ -271,8 +271,8 @@ def get_icon(obj, name=None):
         return temp
 
     _dict = {
-        'auth': 'fas fa-shield-alt',
-        'User': 'far fa-user',
+        'auth' : 'fas fa-shield-alt',
+        'User' : 'far fa-user',
         'Group': 'fas fa-users-cog'
     }
 

@@ -9,16 +9,16 @@ var _ariaMenuitem2 = _interopRequireDefault(_ariaMenuitem);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var Menu = function Menu(domNode) {
-  this.domNode = domNode;
-  this.init();
+    this.domNode = domNode;
+    this.init();
 };
 
 Menu.prototype.init = function () {
-  var menuChildren = this.domNode.childNodes;
-  [].filter.call(menuChildren, function (child) {
-    return child.nodeType === 1;
-  }).forEach(function (child) {
-    new _ariaMenuitem2.default(child); // eslint-disable-line
-  });
+    var menuChildren = this.domNode.childNodes;
+    [].filter.call(menuChildren, function (child) {
+        return child.nodeType === 1;
+    }).forEach(function (child) {
+        new _ariaMenuitem2.default(child); // eslint-disable-line
+    });
 };
-exports.default = Menu;
+exports.default     = Menu;
