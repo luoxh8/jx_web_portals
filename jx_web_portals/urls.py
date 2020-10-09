@@ -1,8 +1,8 @@
-from django.conf.urls import url
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import path, include, re_path
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    url(r'^ckeditor/', include('ckeditor_uploader.urls')),
+    re_path(r'^ckeditor/', include('ckeditor_uploader.urls')),
+    path('news/',)
 ]
